@@ -23,7 +23,6 @@ export default function Home() {
               </p>
             </div>
           </div>
-
           <div className="flex items-center  border bg-[#DEE9F8] p-2 rounded-xl square-foot w-full">
             <Image
               src={'/building.svg'}
@@ -39,7 +38,6 @@ export default function Home() {
               <h2 className="font-bold">$50</h2>
             </div>
           </div>
-
           <div className="flex items-center  bg-[#DEE9F8]  p-2 rounded-xl annual-income w-full">
             <Image
               src={'/circle-dollar.svg'}
@@ -53,16 +51,33 @@ export default function Home() {
               <h2 className="font-bold">$550</h2>
             </div>
           </div>
-
           <button className="w-full bg-[#1470FF] text-[15px] rounded-lg py-2 text-[#ffffff]">
             Join Trading waitlist
+            {/* <Image
+              src={'/arrow-up-right.svg'}
+              alt="arrow-up-right"
+              width={12}
+              height={15}
+            /> */}
           </button>
-
           <button className="w-full bg-[#0E2B56] text-[15px] rounded-lg py-2 text-[#ffffff]">
             Claim My Airspace
+            {/* <Image
+              src={'/arrow-up-right.svg'}
+              alt="arrow-up-right"
+              width={12}
+              height={15}
+            /> */}
           </button>
+
           <button className="w-full border-[2px] text-[15px] text-[#1470FF] rounded-lg border border-[#1470FF] py-2">
             Estimate Another Airspace
+            {/* <Image
+              src={'/arrow-up-right.svg'}
+              alt="arrow-up-right"
+              width={12}
+              height={15}
+            /> */}
           </button>
         </div>
       </div>

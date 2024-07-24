@@ -2,6 +2,7 @@ import Image from 'next/image';
 
 export default function Estimate({ apidata, address }) {
   const addressLine1 = address.split(',').shift();
+  [, ...address] = address.split(',');
   return (
     <div className="container flex flex-wrap items-start my-16">
       <div className="mx-8">

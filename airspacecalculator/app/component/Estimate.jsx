@@ -1,9 +1,18 @@
 import Image from 'next/image';
+import Modal from './Modal';
+import { useState } from 'react';
 
-export default function Estimate({ apidata, address }) {
+export default function Estimate({ apidata, address, showEstimateModal }) {
+  const [startAffresh, setStartAffresh] = useState(false);
+
+  const handleClick = () => {
+    setStartAffresh(true);
+  };
+
   const addressLine1 = address.split(',').shift();
   [, ...address] = address.split(',');
-  return (
+
+  return !startAffresh ? (
     <div className="container flex flex-wrap items-start my-16">
       <div className="mx-8">
         <div className="bg-[#FFFFFF] rounded-xl px-10 h-[512px] gap-4 flex flex-col items-center justify-center">
@@ -59,11 +68,16 @@ export default function Estimate({ apidata, address }) {
             Claim My Airspace
           </button>
 
-          <button className="w-full border-[2px] text-[15px] text-[#1470FF] rounded-lg border border-[#1470FF] py-2">
+          <button
+            onClick={() => handleClick()}
+            className="w-full border-[2px] text-[15px] text-[#1470FF] rounded-lg border border-[#1470FF] py-2"
+          >
             Estimate Another Airspace
           </button>
         </div>
       </div>
     </div>
+  ) : (
+    <Modal />
   );
 }

@@ -139,7 +139,11 @@ function Modal() {
       </div>
     </div>
   ) : (
-    <Estimate apidata={apidata} address={address} />
+    <Estimate
+      apidata={apidata}
+      address={address}
+      showEstimateModal={showEstimateModal}
+    />
   );
 }
 

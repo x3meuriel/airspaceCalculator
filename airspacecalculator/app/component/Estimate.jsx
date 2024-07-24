@@ -1,7 +1,7 @@
-import { MapPinIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 
-export default function Home() {
+export default function Estimate({ apidata, address }) {
+  const addressLine1 = address.split(',').shift();
   return (
     <div className="container flex flex-wrap items-start my-16">
       <div className="mx-8">
@@ -16,10 +16,10 @@ export default function Home() {
             />
             <div className="p-2">
               <h2 className="font-bold mb-2 text-[2rem] tracking-[-4]">
-                111 Sixth Avenue
+                {addressLine1}
               </h2>
               <p className="text-sm whitespace-nowrap text-[1rem] text-gray-500 w-full">
-                Woolgoolga New South Wales 2456, Australia
+                {address}
               </p>
             </div>
           </div>
@@ -35,7 +35,7 @@ export default function Home() {
               <h2 className="font-bold mb-2 text-[20px]">
                 Est. Price Per Square Foot
               </h2>
-              <h2 className="font-bold">$50</h2>
+              <h2 className="font-bold">{`$${apidata.estPrice}`}</h2>
             </div>
           </div>
           <div className="flex items-center  bg-[#DEE9F8]  p-2 rounded-xl annual-income w-full">
@@ -48,36 +48,18 @@ export default function Home() {
             />
             <div>
               <h2 className="font-bold mb-2"> Est.Annual Passive Income </h2>
-              <h2 className="font-bold">$550</h2>
+              <h2 className="font-bold">{`$${apidata.estPriceAnnual}`}</h2>
             </div>
           </div>
           <button className="w-full bg-[#1470FF] text-[15px] rounded-lg py-2 text-[#ffffff]">
             Join Trading waitlist
-            {/* <Image
-              src={'/arrow-up-right.svg'}
-              alt="arrow-up-right"
-              width={12}
-              height={15}
-            /> */}
           </button>
           <button className="w-full bg-[#0E2B56] text-[15px] rounded-lg py-2 text-[#ffffff]">
             Claim My Airspace
-            {/* <Image
-              src={'/arrow-up-right.svg'}
-              alt="arrow-up-right"
-              width={12}
-              height={15}
-            /> */}
           </button>
 
           <button className="w-full border-[2px] text-[15px] text-[#1470FF] rounded-lg border border-[#1470FF] py-2">
             Estimate Another Airspace
-            {/* <Image
-              src={'/arrow-up-right.svg'}
-              alt="arrow-up-right"
-              width={12}
-              height={15}
-            /> */}
           </button>
         </div>
       </div>

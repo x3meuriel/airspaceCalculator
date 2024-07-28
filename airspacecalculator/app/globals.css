@@ -4,5 +4,5 @@
 
 body {
   @apply font-campton;
-  background-image: url(../public/background.svg);
+  /* background-image: url(../public/background.svg); */
 }

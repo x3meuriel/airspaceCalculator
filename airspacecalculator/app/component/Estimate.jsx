@@ -4,9 +4,20 @@ import { useState } from 'react';
 
 export default function Estimate({ apidata, address, showEstimateModal }) {
   const [startAffresh, setStartAffresh] = useState(false);
+  const [closeEstimateModal, setCloseEstimateModal] =
+    useState(showEstimateModal);
+
+  console.log(apidata, 'apidata');
+
+  if (!apidata.estPrice) {
+    apidata.estPrice = 'Price not available';
+    apidata.estPriceAnnual = 'Price not available';
+  }
 
   const handleClick = () => {
     setStartAffresh(true);
+    setCloseEstimateModal(false);
+    showEstimateModal = false;
   };
 
   const addressLine1 = address.split(',').shift();
@@ -78,6 +89,6 @@ export default function Estimate({ apidata, address, showEstimateModal }) {
       </div>
     </div>
   ) : (
-    <Modal />
+    startAffresh && <Modal showEstimateModal={showEstimateModal} />
   );
 }

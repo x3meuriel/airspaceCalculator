@@ -1,17 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 import { default as Estimate } from './Estimate';
+import { default as Map } from './Map';
 
-function Modal() {
+function Modal({ closeEstimateModal }) {
   // const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
   const [address, setAddress] = React.useState('');
   const [addresses, setAddresses] = React.useState([]);
   const [showOptions, setShowOptions] = React.useState(false);
-  const [showEstimateModal, setShowEstimateModal] = React.useState(false);
-  const [coordinates, setCoordinates] = React.useState({
-    longitude: '',
-    latitude: '',
-  });
+  const [showEstimateModal, setShowEstimateModal] =
+    React.useState(closeEstimateModal);
+  const [coordinates, setCoordinates] = React.useState([
+    40.7127492, -74.0059945,
+  ]);
 
   const [apidata, setApiData] = React.useState({}); // new object from skytrade api
   const timeNow = Date.now();
@@ -27,6 +28,9 @@ function Modal() {
   const handleSelectAddress = async (address) => {
     setAddress(address);
     setShowOptions(false);
+    setCoordinates(addresses[0].center);
+
+    console.log(addresses[0].center, 'center in moda');
   };
 
   const getSkyTradeData = async () => {
@@ -45,6 +49,15 @@ function Modal() {
 
       setApiData(apidata.data);
 
+      if (!apidata.data.estPrice) {
+        setApiData({
+          estPrice: '0 No price available for this region yet',
+          estPriceAnnual: '0 No data available for this region yet',
+        });
+      }
+
+      console.log(apidata.data, 'data');
+
       // console.log(apidata.data, 'data');
       // console.log(address, 'address');
     } catch (error) {
@@ -58,8 +71,6 @@ function Modal() {
     let timeoutId;
 
     const getAddresses = async () => {
-      setCoordinates({ longitude: '', latitude: '' });
-
       timeoutId = setTimeout(async () => {
         try {
           const mapboxGeocodingUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}`;
@@ -89,7 +100,7 @@ function Modal() {
 
   return !showEstimateModal ? (
     <div className="flex h-screen items-center justify-between md:p-24 p-7 ">
-      <div className="bg-white shadow-md rounded-[12px] md:p-12 p-5 max-w-[735px] mx-auto w-full">
+      <div className="bg-white shadow-md rounded-[12px] md:p-12 p-5  mx-auto w-full">
         <h2 className="text-[2.625rem] text-center text-[campton] text-[#0E2B56] font-medium mb-4 tracking-[-.1rem]">
           How much is my airspace worth?
         </h2>
@@ -97,7 +108,7 @@ function Modal() {
           Use our airspace value estimator to get a free, instant airsapce-value
           estimate, see nearby airspaces and market trends.
         </p>
-        <div className="relative w-full md:w-[90%] mx-auto flex flex-col gap-[10px]">
+        <div className="relative w-full md:w-[90%] my-auto mx-auto flex flex-col gap-[10px]">
           <input
             type="text"
             autoComplete="off"
@@ -114,7 +125,7 @@ function Modal() {
                   <div
                     key={item.id}
                     onClick={() => handleSelectAddress(item.place_name)}
-                    className="w-full rounded-xl p-5 text-left text-[#222222] hover:bg-gray-500 cursor-pointer hover:text-white"
+                    className="w-full rounded-xl p-5 text-left text-[#222222] hover:bg-gray-500 cursor-pointer hover:text-white mb-2"
                     style={{
                       borderTop: '0.2px solid #222222',
                     }}
@@ -137,13 +148,19 @@ function Modal() {
           </button>
         </div>
       </div>
+      <Map className="w-1/3" coordinates={coordinates} />
     </div>
   ) : (
-    <Estimate
-      apidata={apidata}
-      address={address}
-      showEstimateModal={showEstimateModal}
-    />
+    showEstimateModal && ( // new div
+      <div className="flex">
+        <Estimate
+          apidata={apidata}
+          address={address}
+          showEstimateModal={showEstimateModal}
+        />
+        <Map className=" w-1/3" coordinates={coordinates} />
+      </div>
+    )
   );
 }
 

@@ -2,8 +2,7 @@
 
 import React from 'react';
 import axios from 'axios';
-import { default as Estimate } from '../Estimate/page';
-
+import { Estimate } from '../Estimate/page';
 
 function Modal() {
   const [address, setAddress] = React.useState('');

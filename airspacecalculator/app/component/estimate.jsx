@@ -8,6 +8,9 @@ function Estimate({ apidata, address }) {
   if (!apidata.estPrice) {
     apidata.estPrice = 'Price not available';
     apidata.estPriceAnnual = 'Price not available';
+  } else {
+    apidata.estPrice = parseInt(apidata.estPrice).toFixed(2);
+    apidata.estPriceAnnual = parseFloat(apidata.estPriceAnnual).toFixed(2);
   }
 
   const handleClick = () => {

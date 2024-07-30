@@ -3,9 +3,8 @@ import Image from 'next/image';
 import Modal from '../Modal/page';
 import { useState } from 'react';
 
-export default function Estimate({ apidata, address }) {
+function Estimate({ apidata, address }) {
   const [startAffresh, setStartAffresh] = useState(false);
-  const [closeEstimateModal, setCloseEstimateModal] = useState(false);
   if (!apidata.estPrice) {
     apidata.estPrice = 'Price not available';
     apidata.estPriceAnnual = 'Price not available';
@@ -13,7 +12,6 @@ export default function Estimate({ apidata, address }) {
 
   const handleClick = () => {
     setStartAffresh(true);
-    setCloseEstimateModal(false);
   };
 
   const addressLine1 = address.split(',').shift();
@@ -86,3 +84,5 @@ export default function Estimate({ apidata, address }) {
     startAffresh && <Modal />
   );
 }
+
+export default Estimate;

@@ -13,7 +13,10 @@ function Modal() {
     40.7127492, -74.0059945,
   ]);
 
-  const [apidata, setApiData] = React.useState({}); // new object from skytrade api
+  const [apidata, setApiData] = React.useState({
+    estPrice: '',
+    estPriceAnnual: '',
+  }); // new object from skytrade api
   const timeNow = Date.now();
   const handleChangeAddress = (value) => {
     setAddress(value);

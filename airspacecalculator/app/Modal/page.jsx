@@ -1,15 +1,16 @@
+'use client';
+
 import React from 'react';
 import axios from 'axios';
-import { default as Estimate } from './Estimate';
-import { default as Map } from './Map';
+import { default as Estimate } from '../Estimate/page';
+import { default as Map } from '../component/Map';
+import Link from 'next/link';
 
-function Modal({ closeEstimateModal }) {
-  // const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
+function Modal() {
   const [address, setAddress] = React.useState('');
   const [addresses, setAddresses] = React.useState([]);
   const [showOptions, setShowOptions] = React.useState(false);
-  const [showEstimateModal, setShowEstimateModal] =
-    React.useState(closeEstimateModal);
+  const [showEstimateModal, setShowEstimateModal] = React.useState(false);
   const [coordinates, setCoordinates] = React.useState([
     40.7127492, -74.0059945,
   ]);
@@ -20,10 +21,6 @@ function Modal({ closeEstimateModal }) {
     setAddress(value);
     setShowOptions(true);
   };
-
-  {
-    showEstimateModal && <Estimate />;
-  }
 
   const handleSelectAddress = async (address) => {
     setAddress(address);
@@ -55,17 +52,13 @@ function Modal({ closeEstimateModal }) {
           estPriceAnnual: '0 No data available for this region yet',
         });
       }
-
-      console.log(apidata.data, 'data');
-
-      // console.log(apidata.data, 'data');
-      // console.log(address, 'address');
     } catch (error) {
       console.error(error);
     }
   };
 
   React.useEffect(() => {
+    console.log(showEstimateModal, 'showEstimateModal');
     if (!address) return setShowOptions(false);
 
     let timeoutId;
@@ -98,69 +91,62 @@ function Modal({ closeEstimateModal }) {
 
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
-  return !showEstimateModal ? (
-    <div className="flex h-screen items-center justify-between md:p-24 p-7 ">
-      <div className="bg-white shadow-md rounded-[12px] md:p-12 p-5  mx-auto w-full">
-        <h2 className="text-[2.625rem] text-center text-[campton] text-[#0E2B56] font-medium mb-4 tracking-[-.1rem]">
-          How much is my airspace worth?
-        </h2>
-        <p className="text-center text-gray-600 mb-12 h-[60px] leading-[30px]">
-          Use our airspace value estimator to get a free, instant airsapce-value
-          estimate, see nearby airspaces and market trends.
-        </p>
-        <div className="relative w-full md:w-[90%] my-auto mx-auto flex flex-col gap-[10px]">
-          <input
-            type="text"
-            autoComplete="off"
-            value={address}
-            onChange={(e) => handleChangeAddress(e.target.value)}
-            placeholder="search airspace"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-[#ECECEC] focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+  return (
+    <>
+      {' '}
+      {!showEstimateModal ? (
+        <div className="bg-white shadow-md rounded-[12px] md:p-12 p-5  mx-auto  w-full">
+          <h2 className="text-[2.625rem] text-center text-[campton] text-[#0E2B56] font-medium mb-4 tracking-[-.1rem]">
+            How much is my airspace worth?
+          </h2>
+          <p className="text-center text-gray-600 mb-12 h-[60px] leading-[30px]">
+            Use our airspace value estimator to get a free, instant
+            airsapce-value estimate, see nearby airspaces and market trends.
+          </p>
+          <div className="relative w-full md:w-[90%] my-auto mx-auto flex flex-col gap-[10px]">
+            <input
+              type="text"
+              autoComplete="off"
+              value={address}
+              onChange={(e) => handleChangeAddress(e.target.value)}
+              placeholder="search airspace"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-[#ECECEC] focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
 
-          {showOptions && (
-            <div className="absolute left-0 top-[55px] w-full flex-col bg-white max-h-[250px] overflow-auto ">
-              {addresses.map((item) => {
-                return (
-                  <div
-                    key={item.id}
-                    onClick={() => handleSelectAddress(item.place_name)}
-                    className="w-full rounded-xl p-5 text-left text-[#222222] hover:bg-gray-500 cursor-pointer hover:text-white mb-2"
-                    style={{
-                      borderTop: '0.2px solid #222222',
-                    }}
-                  >
-                    {item.place_name}
-                  </div>
-                );
-              })}
-            </div>
-          )}
+            {showOptions && (
+              <div className="absolute left-0 top-[55px] w-full flex-col bg-white max-h-[250px] overflow-auto ">
+                {addresses.map((item) => {
+                  return (
+                    <div
+                      key={item.id}
+                      onClick={() => handleSelectAddress(item.place_name)}
+                      className="w-full rounded-xl p-5 text-left text-[#222222] hover:bg-gray-500 cursor-pointer hover:text-white mb-2"
+                      style={{
+                        borderTop: '0.2px solid #222222',
+                      }}
+                    >
+                      {item.place_name}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
-          <button
-            onClick={() => {
-              getSkyTradeData();
-              setShowEstimateModal(true);
-            }}
-            className="block w-full text-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:border-[#ECECEC]"
-          >
-            Estimate my Airspace
-          </button>
+            <button
+              onClick={() => {
+                getSkyTradeData();
+                setShowEstimateModal(true);
+              }}
+              className="block w-full text-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:border-[#ECECEC]"
+            >
+              Estimate my Airspace
+            </button>
+          </div>
         </div>
-      </div>
-      <Map className="w-1/3" coordinates={coordinates} />
-    </div>
-  ) : (
-    showEstimateModal && ( // new div
-      <div className="flex">
-        <Estimate
-          apidata={apidata}
-          address={address}
-          showEstimateModal={showEstimateModal}
-        />
-        <Map className=" w-1/3" coordinates={coordinates} />
-      </div>
-    )
+      ) : (
+        showEstimateModal && <Estimate address={address} apidata={apidata} />
+      )}
+    </>
   );
 }
 

@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+'use client';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import mapboxgl from 'mapbox-gl';
 import ReactMapGL from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -26,22 +27,34 @@ const Map = ({ coordinates }) => {
         accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
       });
 
-      setMap(map);
-
       return () => map.remove();
     }
-  }, [map, viewport]);
+  }, [coordinates]);
 
   const accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+
+  const changeCordinates = useCallback(({ viewport }) => {
+    const newCenter = [viewport.longitude, viewport.latitude];
+    setViewPort({
+      ...viewport,
+      longitude: newCenter[0],
+      latitude: newCenter[1],
+    });
+  }, []);
 
   return (
     <>
       {' '}
-      <div className="text-black-relative w-full h-screen ">
+      <div
+        className="text-black-relative w-full h-screen  "
+        ref={mapContainerRef}
+      >
         <ReactMapGL
-          map={map}
           onviewportChange={(nextViewport) => setViewPort(nextViewport)}
           mapboxAccessToken={accessToken}
+          changeCordinates={(viewport) =>
+            setViewPort(changeCordinates(viewport))
+          }
           width="100%"
           heigth="100%"
           mapStyle={'mapbox://styles/mapbox/streets-v11'}

@@ -29,7 +29,7 @@ const Map = ({ coordinates }) => {
 
       return () => map.remove();
     }
-  }, [coordinates]);
+  }, [coordinates, viewport.longitude, viewport.latitude]);
 
   const accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 

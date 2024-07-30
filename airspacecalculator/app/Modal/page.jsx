@@ -87,7 +87,7 @@ function Modal() {
     getAddresses();
 
     return () => clearTimeout(timeoutId);
-  }, [address]);
+  }, [address, showEstimateModal]);
 
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -101,10 +101,11 @@ function Modal() {
           </h2>
           <p className="text-center text-gray-600 mb-12 h-[60px] leading-[30px]">
             Use our airspace value estimator to get a free, instant
-            airsapce-value estimate, see nearby airspaces and market trends.
+            airspace-value estimate, see nearby airspaces and market trends.
           </p>
           <div className="relative w-full md:w-[90%] my-auto mx-auto flex flex-col gap-[10px]">
             <input
+              required
               type="text"
               autoComplete="off"
               value={address}

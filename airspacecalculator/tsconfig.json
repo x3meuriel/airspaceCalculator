@@ -27,7 +27,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/Modal/page.jsx",
-    "app/Estimate/page.jsx"
+    "app/Estimate/estimate.jsx"
   ],
   "exclude": ["node_modules"]
 }

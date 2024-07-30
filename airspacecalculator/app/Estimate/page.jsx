@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Modal from '../Modal/page';
 import { useState } from 'react';
 
-export function Estimate({ apidata, address }) {
+export default function Estimate({ apidata, address }) {
   const [startAffresh, setStartAffresh] = useState(false);
   const [closeEstimateModal, setCloseEstimateModal] = useState(false);
   if (!apidata.estPrice) {

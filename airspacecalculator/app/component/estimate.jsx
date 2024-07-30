@@ -66,10 +66,14 @@ function Estimate({ apidata, address }) {
           </div>
         </div>
         <button className="w-full bg-[#1470FF] text-[15px] rounded-lg py-2 text-[#ffffff]">
-          Join Trading waitlist
+          <a href="https://sky.trade/waitlist"> Join Trading waitlist</a>
         </button>
         <button className="w-full bg-[#0E2B56] text-[15px] rounded-lg py-2 text-[#ffffff]">
-          Claim My Airspace
+          <a
+            href={`https://app.sky.trade/airspaces?propertyAddress=${address}`}
+          >
+            Claim My Airspace
+          </a>
         </button>
 
         <button

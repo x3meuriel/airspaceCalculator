@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 function Estimate({ apidata, address }) {
   const [startAffresh, setStartAffresh] = useState(false);
-  console.log(apidata, 'apidata');
 
   const [apiDataParam, setApiDataParam] = useState({ apidata });
 

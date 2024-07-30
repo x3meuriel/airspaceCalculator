@@ -3,8 +3,7 @@
 import React from 'react';
 import axios from 'axios';
 import { default as Estimate } from '../Estimate/page';
-import { default as Map } from '../component/Map';
-import Link from 'next/link';
+
 
 function Modal() {
   const [address, setAddress] = React.useState('');

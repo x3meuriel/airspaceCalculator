@@ -39,6 +39,7 @@ const Map = ({ coordinates }) => {
       ...viewport,
       longitude: newCenter[0],
       latitude: newCenter[1],
+      zoom: 9,
     });
   }, []);
 
@@ -55,8 +56,8 @@ const Map = ({ coordinates }) => {
           changeCordinates={(viewport) =>
             setViewPort(changeCordinates(viewport))
           }
-          width="100%"
-          heigth="100%"
+          width="100vh"
+          heigth="100vh"
           mapStyle={'mapbox://styles/mapbox/streets-v11'}
         />
       </div>

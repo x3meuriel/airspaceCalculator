@@ -27,8 +27,6 @@ function Modal() {
     setAddress(address);
     setShowOptions(false);
     setCoordinates(addresses[0].center);
-
-    console.log(addresses[0].center, 'center in moda');
   };
 
   const getSkyTradeData = async () => {
@@ -59,7 +57,6 @@ function Modal() {
   };
 
   React.useEffect(() => {
-    console.log(showEstimateModal, 'showEstimateModal');
     if (!address) return setShowOptions(false);
 
     let timeoutId;
@@ -96,7 +93,7 @@ function Modal() {
     <>
       {' '}
       {!showEstimateModal ? (
-        <div className="bg-white shadow-md rounded-[12px] md:p-12 p-5  mx-auto  w-full">
+        <div className="bg-white shadow-md rounded-[12px] md:p-12 p-5  mx-auto  w-full min-w-[600px]">
           <h2 className="text-[2.625rem] text-center text-[campton] text-[#0E2B56] font-medium mb-4 tracking-[-.1rem]">
             How much is my airspace worth?
           </h2>

@@ -5,14 +5,17 @@ import { useState } from 'react';
 
 function Estimate({ apidata, address }) {
   const [startAffresh, setStartAffresh] = useState(false);
-  if (!apidata.estPrice) {
-    apidata.estPrice = 'Price not available';
-    apidata.estPriceAnnual = 'Price not available';
-  } else {
-    apidata.estPrice = parseInt(apidata.estPrice).toFixed(2);
-    apidata.estPriceAnnual = parseFloat(apidata.estPriceAnnual).toFixed(2);
-  }
+  console.log(apidata, 'apidata');
 
+  const [apiDataParam, setApiDataParam] = useState({ apidata });
+
+  if (!apiDataParam.date) {
+    apiDataParam.estPrice = 'Price not available';
+    apiDataParam.estPriceAnnual = 'Price not available';
+  } else {
+    apidata.estPrice = parseInt(apiDataParam.estPrice).toFixed(2);
+    apidata.estPriceAnnual = parseFloat(apiDataParam.estPriceAnnual).toFixed(2);
+  }
   const handleClick = () => {
     setStartAffresh(true);
   };

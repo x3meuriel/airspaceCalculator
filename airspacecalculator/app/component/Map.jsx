@@ -5,8 +5,6 @@ import ReactMapGL from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const Map = ({ coordinates }) => {
-  console.log(coordinates);
-
   const mapContainerRef = useRef(null);
   const [map, setMap] = useState(null);
   const [viewport, setViewPort] = useState({
@@ -46,10 +44,7 @@ const Map = ({ coordinates }) => {
   return (
     <>
       {' '}
-      <div
-        className="text-black-relative w-full h-screen  "
-        ref={mapContainerRef}
-      >
+      <div className="w-full h-screen m-[1rem]  " ref={mapContainerRef}>
         <ReactMapGL
           onviewportChange={(nextViewport) => setViewPort(nextViewport)}
           mapboxAccessToken={accessToken}

@@ -1,61 +1,54 @@
 'use client';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useContext } from 'react';
 import mapboxgl from 'mapbox-gl';
-import ReactMapGL from 'react-map-gl';
+import { Map } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { useAppContext } from '@/app/context/index';
 
-const Map = ({ coordinates }) => {
+const Mapper = () => {
+  const { coordinates, setCoordinates } = useAppContext();
   const mapContainerRef = useRef(null);
   const [map, setMap] = useState(null);
   const [viewport, setViewPort] = useState({
     latitude: coordinates[0],
     longitude: coordinates[1],
-    zoom: 11,
+    zoom: 10,
   });
 
-  console.log(viewport, 'viewport');
+  console.log(coordinates, 'coordinates');
+  console.log(viewport);
 
-  useEffect(() => {
-    if (mapContainerRef.current) {
-      const map = new mapboxgl.Map({
-        container: mapContainerRef.current,
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [viewport.latitude, viewport.longitude],
-        zoom: 11,
-        accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
-      });
+  const mapRef = useRef(null);
+  // useEffect(() => {
+  //   // Update the viewport or marker position based on any logic or state change
+  //   setViewPort({
+  //     ...viewport,
+  //     latitude: coordinates.latitude,
+  //     longitude: coordinates.longitude,
+  //     zoom: 10,
+  //   });
 
-      return () => map.remove();
-    }
-  }, [coordinates, viewport.longitude, viewport.latitude]);
-
-  const accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
-
-  const changeCordinates = useCallback(({ viewport }) => {
-    const newCenter = [viewport.longitude, viewport.latitude];
-    setViewPort({
-      ...viewport,
-      longitude: newCenter[0],
-      latitude: newCenter[1],
-      zoom: 9,
-    });
-  }, []);
+  //   return () => map.remove();
+  // }, [viewport, coordinates]);
 
   return (
     <>
       {' '}
-      <div className="w-full h-screen m-[1rem]  " ref={mapContainerRef}>
-        <ReactMapGL
-          onviewportChange={(nextViewport) => setViewPort(nextViewport)}
-          mapboxAccessToken={accessToken}
-          changeCordinates={(viewport) =>
-            setViewPort(changeCordinates(viewport))
-          }
-          width="100vh"
-          heigth="100vh"
-          mapStyle={'mapbox://styles/mapbox/streets-v11'}
+      <div className="w-full h-screen m-[1rem]  ">
+        <Map
+          mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
+          initialViewState={{
+            longitude: viewport.longitude,
+            latitude: viewport.latitude,
+            zoom: 10,
+            bearing: 0,
+          }}
+          style={{ height: '100vh' }}
+          mapStyle="mapbox://styles/mapbox/streets-v9"
+          onViewportChange={(nextViewport) => setViewPort(nextViewport)}
         />
       </div>
+      {() => console.log(viewport, 'vp')}
       <div
         className="map-container"
         ref={mapContainerRef}
@@ -66,4 +59,4 @@ const Map = ({ coordinates }) => {
   );
 };
 
-export default Map;
+export default Mapper;

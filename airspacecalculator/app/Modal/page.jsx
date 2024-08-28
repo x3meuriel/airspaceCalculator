@@ -10,7 +10,7 @@ function Modal() {
   const [addresses, setAddresses] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
   const [showEstimateModal, setShowEstimateModal] = useState(false);
-  const { setCoordinates } = useAppContext();
+  const { coordinates, setCoordinates } = useAppContext();
 
   const [apidata, setApiData] = React.useState({
     estPrice: '',
@@ -26,6 +26,7 @@ function Modal() {
     setAddress(address);
     setShowOptions(false);
     setCoordinates(addresses[0].center);
+    console.log(coordinates);
   };
 
   const getSkyTradeData = async () => {

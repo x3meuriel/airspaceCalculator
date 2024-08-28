@@ -48,7 +48,6 @@ const Mapper = () => {
           onViewportChange={(nextViewport) => setViewPort(nextViewport)}
         />
       </div>
-      {() => console.log(viewport, 'vp')}
       <div
         className="map-container"
         ref={mapContainerRef}

@@ -10,7 +10,7 @@ function Modal() {
   const [addresses, setAddresses] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
   const [showEstimateModal, setShowEstimateModal] = useState(false);
-  const { coordinates, setCoordinates } = useAppContext();
+  const { setCoordinates } = useAppContext();
 
   const [apidata, setApiData] = React.useState({
     estPrice: '',
